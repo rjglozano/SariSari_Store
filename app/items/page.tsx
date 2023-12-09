@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Modal from '@/components/Modal';
+import Items from '@/components/Items';
 
 const ItemsPage: React.FC = () => {
 
@@ -25,6 +26,7 @@ const ItemsPage: React.FC = () => {
     </button>
 
     <Modal isOpen={isModalOpen} onClose={handleCloseModal} />
+    <Items />
   </div>
   )
 }
