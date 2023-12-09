@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// npx prisma format
+// npm i -D prisma  
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model ItemsModel {
+  id          String   @id @unique @default(uuid())
+  name        String
+  description String
+  price       String
+  image       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

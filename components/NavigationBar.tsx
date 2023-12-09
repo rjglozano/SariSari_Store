@@ -17,7 +17,7 @@ const NavigationBar = () => {
 
 
   return (
-    <nav className='flex space-x-3 border-b-2 px-5 h-14 items-center justify-between relative w-full shadow-md bg-white z-10 '>
+    <nav className='flex space-x-3 border-b-2 px-5 h-14 items-center justify-between sticky top-0 w-full shadow-md bg-white z-10 '>
       <Link href='/' className='flex items-center mx-4'>
         <Image 
           src="/images/logo_sarisari.png" 
