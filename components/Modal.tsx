@@ -86,14 +86,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <label htmlFor="description" className="block text-sm font-medium text-gray-600">
               Description
             </label>
-            <input
-              type="text"
+            <textarea
               id="description"
               {...register('description')}
               value={description}
               placeholder='Enter the description of the item'
               onChange={(e) => setDescription(e.target.value)}
-              className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+              className="mt-1 p-2 border border-gray-300 rounded-md w-full resize-none h-30	"
             />
           </div>
           <div className="mb-4">
