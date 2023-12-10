@@ -17,10 +17,10 @@ const ItemsPage: React.FC = () => {
   };
 
   return (
-    <div className='h-screen'>
+    <div className='h-screen bg-zinc-200'>
     <button
       onClick={handleOpenModal}
-      className="bg-red-300 text-white px-4 py-2 rounded-md hover:bg-red-400 m-5"
+      className="bg-red-300 font-semibold text-white px-4 py-2 rounded-md hover:bg-red-500 m-5"
     >
       Add Item
     </button>

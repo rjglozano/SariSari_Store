@@ -45,9 +45,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       }
 
       setSubmitting(false);
-
-
-      onClose()
+      window.location.reload();
     } catch (error) {
       setSubmitting(false);
       setError('An unexpected error occurred');

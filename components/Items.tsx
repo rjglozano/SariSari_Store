@@ -29,18 +29,19 @@ const Items = () => {
   }, []); 
 
   return (
-    <div>
-      <h1>Items</h1>
-      <ul>
+    <div className="w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 m-5 ">
         {items.map((item) => (
-          <li key={item.id}>
-            <p className="">Name: {item.name}</p>
-            <p>Description: {item.description}</p>
-            <p>Price: {item.price}</p>
-            <img src={item.image} alt={item.name} />
-          </li>
+          <div className="bg-red-400 rounded-md shadow-lg" key={item.id}>
+            <img className="rounded-t-md" src={item.image} alt={item.name} />
+              <div className="flex items-center justify-between">
+                <div className="font-semibold text-start p-4 text-2xl text-white">{item.name}</div>
+                <div className="font-semibold text-xl text-black p-2 rounded-md bg-white mr-4">₱{parseFloat(item.price).toFixed(2)}</div>
+              </div>
+              <button className="p-2 bg-white text-gray-500 w-full">View Details</button>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
