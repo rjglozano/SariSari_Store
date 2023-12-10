@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Patua+One&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -25,4 +25,8 @@ body {
   font-family: 'Pacifico', cursive;
 }
 
+.PatuaFont{
+  font-family: 'Patua One', serif;
+
+}
 

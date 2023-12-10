@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='overflow-y-auto' >
+      <body className='h-screen w-full' >
       <NavigationBar />
           {children}
         </body>

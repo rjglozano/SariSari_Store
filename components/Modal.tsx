@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Spinner from './Spinner';
 import { createIssueSchema } from '@/app/api/items/validationSchema';
 import { z } from 'zod';
@@ -21,7 +20,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [imageLink, setImageLink] = useState('');
   const [error, setError] = useState('')
   const [isSubmitting, setSubmitting] = useState(false)
-  const router = useRouter();
 
   const {register, handleSubmit, formState: { errors }} = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema)
@@ -62,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       {error && <div>{error}</div>}
       {/* Modal content */}
       <div
-        className="bg-white p-8 rounded-lg md:w-4/12 sm:w-10/12"
+        className="bg-white p-8 rounded-lg md:w-4/12 sm:w-10/12 w-full mx-4 "
         onClick={(e) => e.stopPropagation()}
       >
         <h1 className='text-2xl text-center font-bold mb-5 text-gray-600'>Add Item</h1>
@@ -128,7 +126,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </div>
           
       
-          <div className="flex justify-end ">
+          <div className="flex justify-end gap-2">
+            <button className='bg-zinc-300 py-2 px-4 rounded-md font-semibold hover:bg-zinc-400' onClick={onClose}>Close</button>
             <button
               type="submit"
               className="bg-red-500 flex font-semibold text-white px-6 py-2 rounded-md disabled:bg-zinc-400 hover:bg-red-600"
