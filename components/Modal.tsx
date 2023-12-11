@@ -26,7 +26,6 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   });
 
 
-
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);

@@ -7,6 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import SpinnerTwo from '@/components/SpinnerTwo';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useRouter } from 'next/navigation';
+import ModalUpdate from '@/components/ModalUpdate';
 
 interface Item {
   id: string;
@@ -22,6 +23,15 @@ const Page = ({ params }: { params: { itemID: string } }) => {
   const { itemID } = params;
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const router = useRouter()
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
 
   const openDeleteModal = () => {
     setDeleteModalOpen(true);
@@ -76,8 +86,9 @@ const Page = ({ params }: { params: { itemID: string } }) => {
 
 
   return (
+    
   <div className='min-h-full bg-zinc-200'>
-           
+      <ModalUpdate isOpen={isModalOpen} onClose={handleCloseModal} params={{ itemID: itemID }} />
       {isDeleteModalOpen && (
       <div className=' w-full flex items-center justify-center bg-black bg-opacity-50 z-50 h-full fixed'>
         <div className={`bg-white p-2 border-slate-100 rounded-lg `}>
@@ -119,11 +130,8 @@ const Page = ({ params }: { params: { itemID: string } }) => {
                   <div onClick={openDeleteModal}>
                       <MdDelete size={30} className="hover:text-white transition-colors cursor-pointer" />
                   </div>
-                  <div>
-                    <Link 
-                      href='/'>
-                        <FaEdit size={30} className="hover:text-white transition-colors" />
-                    </Link>
+                  <div onClick={handleOpenModal}>
+                    <FaEdit size={30} className="hover:text-white transition-colors" />
                   </div>
                 </div>
               </div>
