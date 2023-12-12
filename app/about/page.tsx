@@ -1,12 +1,13 @@
 'use client'
 
-import SpinnerTwo from '@/components/SpinnerTwo'
+import AboutPage from '@/components/AboutPage'
 import React from 'react'
 
-const AboutPage = () => {
+
+const About = () => {
   return (
-    <div><SpinnerTwo /></div>
+    <div><AboutPage /></div>
   )
 }
 
-export default AboutPage
+export default About

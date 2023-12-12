@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/client";
 
-interface UpdateItemRequestBody {
-    id?:string,
-    name?: string;
-    description?: string;
-    price?: string;
-    image?: string;
-  }
   
-    
 export async function GET(req: NextRequest, { params }: { params: { itemID: string } }) {
     try {
         const { itemID } = params;
@@ -58,8 +50,6 @@ export async function PUT(req: NextRequest, { params }: { params: { itemID: stri
             where: { id: itemID },
             data: body,
         });
-
-
         if (!updatedItem) {
             return NextResponse.json({ error: 'Item not found' }, { status: 404 });
         }

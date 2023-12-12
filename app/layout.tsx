@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import NavigationBar from '@/components/NavigationBar'
+import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
   title: 'Sari-Sari Store',
@@ -18,6 +19,7 @@ export default function RootLayout({
       <body className='h-screen w-full' >
       <NavigationBar />
           {children}
+        <Footer />
         </body>
     </html>
   )

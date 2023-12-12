@@ -45,9 +45,12 @@ const Page = ({ params }: { params: { itemID: string } }) => {
     const fetchData = async () => {
       try {
         const response = await fetch(`/api/items/${itemID}`);
-        const result = await response.json();
-  
-        setData(result);
+
+        if(response.ok){
+          const result = await response.json();
+          setData(result);
+        }
+      
       } catch (error) {
         console.error('Error fetching data:', error);
       }

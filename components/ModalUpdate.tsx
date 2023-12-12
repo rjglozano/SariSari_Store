@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -30,7 +31,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<IssueForm>({
+  const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   });
 
@@ -40,6 +41,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
     const fetchItemDetails = async () => {
       try {
         const response = await fetch(`/api/items/${itemID}`);
+        
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -53,7 +55,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
         });
 
       } catch (error) {
-        console.error('Error fetching item details:', error);
+        console.log('Error fetching item details:', error);
       }
     };
 
@@ -64,7 +66,6 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
-      console.log('Form Data:', data);
       const response = await fetch(`/api/items/${itemID}`, {
         method: 'PUT', 
         body: JSON.stringify(data),
@@ -76,11 +77,15 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
     if (!response.ok) {
       const errorData = await response.json();
       console.error('Error:', errorData);
-  }
-
-    
+    } else{
+      const updatedData = await response.json();
+      setFormData(updatedData)
+    }
+  
+      onClose()
       setSubmitting(false);
       reset();
+      window.location.reload();
     } catch (error) {
       console.error('Error:', error);
       setSubmitting(false);
@@ -116,7 +121,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
               type="text"
               id="name"
               value={formData.name}
-              placeholder='Enter the name of the item'
+              placeholder='Name'
               {...register('name')}
               onChange={handleInputChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
@@ -132,7 +137,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
               id="description"
               {...register('description')}
               value={formData.description}
-              placeholder='Enter the description of the item'
+              placeholder='Description'
               onChange={handleInputChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full resize-none h-30	"
               required
@@ -147,7 +152,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
               id="price"
               {...register('price')}
               value={formData.price}
-              placeholder='Enter the price of the item'
+              placeholder='Price'
               onChange={handleInputChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               required
@@ -162,7 +167,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
               id="image"
               {...register('image')}
               value={formData.image}
-              placeholder='Enter the image link of the item'
+              placeholder='Image Link'
               onChange={handleInputChange}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
               required
@@ -175,7 +180,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
             <button
               type="submit"
               className="bg-red-500 flex font-semibold text-white px-6 py-2 rounded-md disabled:bg-zinc-400 hover:bg-red-600"
-              disabled={isSubmitting} 
+              disabled={isSubmitting || !isValid} 
             >
               Submit {isSubmitting && <Spinner />}
             </button>

@@ -1,6 +1,5 @@
 // components/HeroSection.js or components/HeroSection.tsx
 import React from 'react';
-import NavigationBar from './NavigationBar';
 
 const Hero = () => {
   return (

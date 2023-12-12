@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from "react-hook-form";
 
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
@@ -19,9 +19,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [price, setPrice] = useState('');
   const [imageLink, setImageLink] = useState('');
   const [error, setError] = useState('')
-  const [isSubmitting, setSubmitting] = useState(false)
+  const [isSubmitting, setSubmitting] = useState(false);
 
-  const {register, handleSubmit, formState: { errors }} = useForm<IssueForm>({
+  const {register, handleSubmit, formState: { errors, isValid  }} = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema)
   });
 
@@ -75,7 +75,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               type="text"
               id="name"
               value={name}
-              placeholder='Enter the name of the item'
+              placeholder='Name'
               {...register('name')}
               onChange={(e) => setName(e.target.value)}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
@@ -89,7 +89,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               id="description"
               {...register('description')}
               value={description}
-              placeholder='Enter the description of the item'
+              placeholder='Description'
               onChange={(e) => setDescription(e.target.value)}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full resize-none h-30	"
             />
@@ -103,7 +103,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               id="price"
               {...register('price')}
               value={price}
-              placeholder='Enter the price of the item'
+              placeholder='Price'
               onChange={(e) => setPrice(e.target.value)}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -117,7 +117,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               id="image"
               {...register('image')}
               value={imageLink}
-              placeholder='Enter the image link of the item'
+              placeholder='Image Link'
               onChange={(e) => setImageLink(e.target.value)}
               className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             />
@@ -128,8 +128,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <button className='bg-zinc-300 py-2 px-4 rounded-md font-semibold hover:bg-zinc-400' onClick={onClose}>Close</button>
             <button
               type="submit"
+              disabled={!isValid || isSubmitting} 
               className="bg-red-500 flex font-semibold text-white px-6 py-2 rounded-md disabled:bg-zinc-400 hover:bg-red-600"
-              disabled={isSubmitting} 
+       
             >
               Submit {isSubmitting && <Spinner />}
             </button>
