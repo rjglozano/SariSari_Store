@@ -54,6 +54,7 @@ const NavigationBar = () => {
         <div className='absolute right-0 top-full mt-4 w-sm p-5 rounded-lg bg-red-50 min-w-[200px] flex flex-col gap-2 justify-end items-end opacity-90 z-20'>
           {NavigationLinks.map(link => (
             <Link
+              key={link.href}
               href={link.href}
               className={classnames({
                 'text-white rounded-lg bg-red-400 font-semibold': link.href === currentPath,
