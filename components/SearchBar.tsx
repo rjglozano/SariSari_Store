@@ -16,6 +16,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
   const [data, setData] = useState<Item[]>([]);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,15 +34,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const filteredItems = data.filter((item) =>
-      item.name.toLowerCase().includes(query.toLowerCase()) ||
-      item.price.toLowerCase().includes(query.toLowerCase())
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    setQuery(value);
+      const filteredItems = data.filter((item) =>
+      item.name.toLowerCase().includes(value.toLowerCase())
     );
-
+      
     onSearch?.(filteredItems);
-  }, [query, data, onSearch]);
-  
+  };
 
   return (
     <div className='sm:w-1/2 md:w-1/4 mx-5'>
@@ -58,7 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
           id="search"
           placeholder="Search something..."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleInputChange}
         />
       </div>
 

@@ -47,12 +47,13 @@ const Items = () => {
 
   const handleSearch = (searchQuery: string | Item[]) => {
     if (typeof searchQuery === 'string') {
-      const filteredItems = items.filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      setFilteredItems(() =>
+        items.filter((item) =>
+          item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
       );
-      setFilteredItems(filteredItems);
     } else {
-      setFilteredItems(searchQuery);
+      setFilteredItems(() => searchQuery); 
     }
   };
 
@@ -91,14 +92,13 @@ const Items = () => {
 
           <Modal isOpen={isModalOpen} onClose={handleCloseModal} /> 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 mx-5 place-items-center">
-          {filteredItems.map((item) => (
+          {(filteredItems.length > 0 ? filteredItems : items).map((item) => (
             <div
               className="rounded-md shadow-lg overflow-hidden sm:w-full cursor-pointer hover:scale-105 bg-gradient-to-t from-red-500 to-zinc-50 mb-5"
               key={item.id}
             >
               <Image
                 src={item.image}
-              
                 alt={item.name}
                 width={300}
                 height={400}

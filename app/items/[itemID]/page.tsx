@@ -8,6 +8,7 @@ import SpinnerTwo from '@/components/SpinnerTwo';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { useRouter } from 'next/navigation';
 import ModalUpdate from '@/components/ModalUpdate';
+import Image from 'next/image';
 
 interface Item {
   id: string;
@@ -24,6 +25,8 @@ const Page = ({ params }: { params: { itemID: string } }) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const router = useRouter()
   const [isModalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
+
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -49,10 +52,13 @@ const Page = ({ params }: { params: { itemID: string } }) => {
         if(response.ok){
           const result = await response.json();
           setData(result);
+          setLoading(false)
         }
       
       } catch (error) {
         console.error('Error fetching data:', error);
+        setLoading(false);
+
       }
     };
   
@@ -90,7 +96,7 @@ const Page = ({ params }: { params: { itemID: string } }) => {
 
   return (
     
-  <div className='min-h-full bg-zinc-200'>
+  <div className='min-h-full bg-red-100'>
       <ModalUpdate isOpen={isModalOpen} onClose={handleCloseModal} params={{ itemID: itemID }} />
       {isDeleteModalOpen && (
       <div className=' w-full flex items-center justify-center bg-black bg-opacity-50 z-50 h-full fixed'>
@@ -115,6 +121,9 @@ const Page = ({ params }: { params: { itemID: string } }) => {
 
       {data && (
         <div className='flex justify-center items-center'>
+          {loading ? (
+              <div className="text-center"><SpinnerTwo /></div>
+          ):(
           <div className='flex flex-col md:flex md:flex-row md:items-center bg-red-300 my-5 mx-4 rounded-lg relative'>
             <div>
               <Link 
@@ -122,7 +131,7 @@ const Page = ({ params }: { params: { itemID: string } }) => {
                 <IoMdArrowRoundBack size={30} className="text-white hover:scale-125 transition-all absolute top-4 left-3 p-1 bg-red-300 rounded-full" />
               </Link>
             </div>
-            <img className="rounded-t-lg md:rounded-r-none md:rounded-l-lg" src={data.image} alt={data.name} width={400} height={400} />
+            <Image className="rounded-t-lg md:rounded-r-none md:rounded-l-lg" src={data.image} alt={data.name} width={400} height={400} />
             <div className='flex flex-col items-center mx-4 my-4 space-y-2 p-2'>
               <div className='PatuaFont pt-2 text-4xl font-semibold'>{data.name}</div>
               <div className='font-semibold bg-white rounded-full px-2'>Product Detail</div>
@@ -141,15 +150,10 @@ const Page = ({ params }: { params: { itemID: string } }) => {
             </div>
     
           </div>
+        )}
         </div>
       )}
 
-      
-      {!data && 
-        <div className='h-screen'>
-          <SpinnerTwo />
-        </div>
-      }
 
   </div>
 

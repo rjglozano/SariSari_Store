@@ -1,6 +1,5 @@
 'use client'
 
-import React, { useState } from 'react';
 import Items from '@/components/Items';
 const ItemsPage: React.FC = () => {
 
