@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import Items from './Items';
 
 interface Item {
   id: string;
@@ -9,15 +8,21 @@ interface Item {
   image: string;
 }
 
-const SearchBar = () => {
+interface SearchBarProps {
+  onSearch: (query: string | Item[]) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [query, setQuery] = useState('');
   const [data, setData] = useState<Item[]>([]);
-  const [filteredData, setFilteredData] = useState<Item[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('/api/items/');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const result = await response.json();
         setData(result);
       } catch (error) {
@@ -29,11 +34,14 @@ const SearchBar = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(query.toLowerCase())
+    const filteredItems = data.filter((item) =>
+      item.name.toLowerCase().includes(query.toLowerCase()) ||
+      item.price.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredData(filtered);
-  }, [query]);
+
+    onSearch?.(filteredItems);
+  }, [query, data, onSearch]);
+  
 
   return (
     <div className='sm:w-1/2 md:w-1/4 mx-5'>
