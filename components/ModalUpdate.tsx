@@ -31,7 +31,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<IssueForm>({
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<IssueForm>({
     resolver: zodResolver(createIssueSchema),
   });
 
@@ -180,7 +180,7 @@ const ModalUpdate: React.FC<ModalProps> = ({ isOpen, onClose, params }) => {
             <button
               type="submit"
               className="bg-red-500 flex font-semibold text-white px-6 py-2 rounded-md disabled:bg-zinc-400 hover:bg-red-600"
-              disabled={isSubmitting || !isValid} 
+              disabled={isSubmitting} 
             >
               Submit {isSubmitting && <Spinner />}
             </button>
