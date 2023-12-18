@@ -20,7 +20,7 @@ const AboutPage = () => {
         <p className="mb-4 ">
           We believe in the importance of community and strive to create a
           welcoming environment for our customers. If you have any questions,
-          suggestions, or if there &apos s anything specific you &apos re looking for, feel
+          suggestions, or if there&apos;s anything specific you&apos;re looking for, feel
           free to reach out to us. Your feedback is valuable to us!
         </p>
         <p className='mb-4'>
